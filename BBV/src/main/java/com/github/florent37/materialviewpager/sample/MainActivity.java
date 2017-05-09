@@ -2,7 +2,9 @@ package com.github.florent37.materialviewpager.sample;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -33,12 +35,14 @@ public class MainActivity extends DrawerActivity {
 
     @BindView(R.id.materialViewPager)
     MaterialViewPager mViewPager;
-   private ArrayList<Data> mPlayerList;
+    private ArrayList<Data> mPlayerList;
+    private ArrayList<RecyclerViewFragment> mlistFragments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("");
+
         ButterKnife.bind(this);
 
         final Toolbar toolbar = mViewPager.getToolbar();
@@ -46,25 +50,13 @@ public class MainActivity extends DrawerActivity {
             setSupportActionBar(toolbar);
         }
          mPlayerList=getIntent().getParcelableArrayListExtra("data");
+        mlistFragments=new ArrayList<>();
          Log.e("id",mPlayerList.get(0).playListId+"");
-        mViewPager.getViewPager().setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
-
-            @Override
-            public Fragment getItem(int position) {
-
-                return RecyclerViewFragment.newInstance(mPlayerList.get(position).playListId,mPlayerList.get(position).playListUrl);
-            }
-
-            @Override
-            public int getCount() {
-                return mPlayerList.size();
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return mPlayerList.get(position).playListName.toString();
-            }
-        });
+        for(int i=0;i<mPlayerList.size();i++)
+        {
+            mlistFragments.add(RecyclerViewFragment.newInstance(mPlayerList.get(i).playListId,mPlayerList.get(i).playListUrl));
+        }
+        mViewPager.getViewPager().setAdapter(new myPagerAdapter(getSupportFragmentManager()));
 
 
         mViewPager.setMaterialViewPagerListener(new MaterialViewPager.Listener() {
@@ -127,6 +119,7 @@ public class MainActivity extends DrawerActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.e("pos",position+"");
+                mlistFragments.get(position).loadData();
 
             }
 
@@ -136,5 +129,46 @@ public class MainActivity extends DrawerActivity {
             }
         });
 
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //load data to first framgnet instance
+                if(mlistFragments.size()>0)
+                {
+                    mlistFragments.get(0).loadData();
+                }
+            }
+        }, 200);
+    }
+
+    class myPagerAdapter extends FragmentStatePagerAdapter
+    {
+
+
+        public myPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mlistFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mPlayerList.size();
+        }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mPlayerList.get(position).playListName.toString();
+        }
     }
 }

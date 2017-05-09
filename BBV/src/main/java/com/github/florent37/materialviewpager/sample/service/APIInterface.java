@@ -20,6 +20,8 @@ public interface APIInterface {
     Call<VideosListResponse> doGetVideos(@Query("playlistId") String playlistid, @Query("key") String key, @Query("part") String part, @Query("maxResults") Integer limit);
     @GET("/youtube/v3/videos")
     Call<Videoinforesponse> doGetVideoInfo(@Query("id") String videoid, @Query("key") String key, @Query("fields") String fields, @Query("part") String  part);
+    @GET("/youtube/v3/playlistItems")
+    Call<VideosListResponse> doGetVideosMore(@Query("playlistId") String playlistid, @Query("key") String key, @Query("part") String part, @Query("maxResults") Integer limit,@Query("pageToken") String pageToken);
 
 
 }
