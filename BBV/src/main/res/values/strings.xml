@@ -4,5 +4,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="viewcount">viewCount</string>
+    <string name="likecount">likeCount</string>
+    <string name="dislikecount">dislikeCount</string>
+    <string name="comment_count">commentCount</string>
 
 </resources>

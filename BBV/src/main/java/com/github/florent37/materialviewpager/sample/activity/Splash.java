@@ -39,9 +39,7 @@ public class Splash extends AppCompatActivity {
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
 
-// get an array of all the cards
-         Colors[]cards= Colors.values();
-        Log.e("value",cards[0].getColorCode()+"");
+
 
 
         getplayList();

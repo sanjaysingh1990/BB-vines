@@ -10,4 +10,6 @@
     <color name="navigationBarColor">@android:color/black</color>
     <color name="drawerArrowColor">@android:color/white</color>
     <color name="gray_bg">#dadada</color>
+    <color name="splah_bg">#CFD8DC</color>
+    <color name="dark_gray">#848484</color>
 </resources>

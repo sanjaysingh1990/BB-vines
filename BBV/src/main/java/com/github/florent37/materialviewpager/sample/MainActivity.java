@@ -1,5 +1,6 @@
 package com.github.florent37.materialviewpager.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -18,7 +19,9 @@ import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.github.florent37.materialviewpager.sample.fragment.RecyclerViewFragment;
+import com.github.florent37.materialviewpager.sample.other.Colors;
 import com.github.florent37.materialviewpager.sample.other.Data;
+import com.github.florent37.materialviewpager.sample.utility.Util;
 
 import java.util.ArrayList;
 
@@ -89,8 +92,13 @@ public class MainActivity extends DrawerActivity {
                 //execute others actions if needed (ex : modify your header logo)
 
                 return null;*/
-                return HeaderDesign.fromColorResAndUrl(
-                        R.color.green,
+
+              // get an array of all the cards
+                Colors[]cards= Colors.values();
+                int num=Util.getInstance().getRadomNumber();
+                Log.e("value",cards[num].getColorCode()+"");
+                return HeaderDesign.fromColorAndUrl(
+                        Color.parseColor(cards[num].getColorCode()),
                         mPlayerList.get(page).playListUrl);
 
 
