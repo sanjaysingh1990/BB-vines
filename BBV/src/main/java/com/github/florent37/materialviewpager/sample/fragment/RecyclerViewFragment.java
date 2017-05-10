@@ -93,7 +93,7 @@ public class RecyclerViewFragment extends Fragment {
     public void loadData()
     {   String playlistid = getArguments().getString(Constants.PLAYLISTID);
         Log.e("id", playlistid + "");
-        Log.e("size",mItemList.size()+"");
+//        Log.e("size",mItemList.size()+"");
         if(mItemList.size()==0) {
            mProgressBar.setVisibility(View.VISIBLE);
             getplayList(playlistid);

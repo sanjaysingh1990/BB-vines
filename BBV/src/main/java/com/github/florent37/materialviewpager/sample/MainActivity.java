@@ -1,8 +1,11 @@
 package com.github.florent37.materialviewpager.sample;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -37,6 +40,9 @@ public class MainActivity extends DrawerActivity {
     MaterialViewPager mViewPager;
     private ArrayList<Data> mPlayerList;
     private ArrayList<RecyclerViewFragment> mlistFragments;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +134,41 @@ public class MainActivity extends DrawerActivity {
 
             }
         });
+
+//initialize navigation view
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                int id = menuItem.getItemId();
+                mDrawerLayout.closeDrawers();
+
+                switch (id) {
+                    case R.id.home:
+                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.settings:
+                        Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.trash:
+                        Toast.makeText(getApplicationContext(), "Trash", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.about:
+                        String url = "http://www.lootntrick.com/youtuber/bhuvan-bam-bb-ki-vines-wiki-age-weight-height-biography-net-income";
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse(url));
+                        startActivity(i);
+                        break;
+                    case R.id.logout:
+                        finish();
+
+                }
+                return true;
+            }
+        });
+
+
 
 
 
