@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Material View Pager</string>
+    <string name="app_name">All Vines</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,5 +8,9 @@
     <string name="likecount">likeCount</string>
     <string name="dislikecount">dislikeCount</string>
     <string name="comment_count">commentCount</string>
+    <string name="share_download">Hey I just downloaded and installed CRICiT, awesome app to play cricket with friends and invite them via app.Click here to download CricIt:
+https://play.google.com/store/apps/details?id=com.cricit</string>
 
+    <string name="rate_app_title">Rate this app</string>
+    <string name="rate_app_message">if you enjoy using this app. would you mind taking a moment to rate it? It won\'t take more than a minute. Thank you for your support!</string>
 </resources>

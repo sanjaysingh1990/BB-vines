@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
-            android:title="Home"
-            android:icon="@drawable/ic_home"/>
+            android:id="@+id/share"
+            android:title="Share"
+            android:icon="@drawable/ic_share"/>
         <item
             android:id="@+id/settings"
             android:title="Settings"
             android:icon="@drawable/ic_setting"/>
         <item
-            android:id="@+id/trash"
-            android:title="Trash"
-            android:icon="@drawable/ic_trash"
+            android:id="@+id/appinfo"
+            android:title="About App"
+            android:icon="@drawable/ic_info"
 
             />
         <item

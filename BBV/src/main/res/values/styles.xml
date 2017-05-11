@@ -2,8 +2,17 @@
 
 
     <style name="AppBaseTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
-    </style>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
+        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+    </style>
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">#7f8c8d</item>
+        <item name="android:textColorPrimary">#bdc3c7</item>
+        <item name="android:background">#e74c3c</item>
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
 

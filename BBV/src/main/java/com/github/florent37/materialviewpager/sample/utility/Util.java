@@ -1,8 +1,14 @@
 package com.github.florent37.materialviewpager.sample.utility;
 
+import android.util.Log;
+
 import com.github.florent37.materialviewpager.sample.other.Colors;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 /**
  * Created by android on 9/5/17.
@@ -41,5 +47,27 @@ public class Util {
                 ) + "" + c[iteration])
                 : coolFormat(d, iteration+1));
 
+    }
+
+    public String getDateTime(String startTime) {
+        String data = "";
+        /*
+         ********************** DATE AND TIME FORMATTING EXCPETION ******************
+         */
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date myDate = simpleDateFormat.parse(startTime);
+            DateFormat date = new SimpleDateFormat("EEE dd");
+            DateFormat date2 = new SimpleDateFormat("EEE dd hh:mm a");
+            DateFormat time = new SimpleDateFormat("hh:mm a");
+            data= String.valueOf(date2.format(myDate));
+        }
+        catch (Exception ex)
+        {
+            Log.e("error",ex.getMessage());
+        }
+
+        return data;
     }
 }

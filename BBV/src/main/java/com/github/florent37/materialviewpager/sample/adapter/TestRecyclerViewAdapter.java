@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.florent37.materialviewpager.sample.R;
 import com.github.florent37.materialviewpager.sample.activity.PlayerActivity;
 import com.github.florent37.materialviewpager.sample.other.Config;
+import com.github.florent37.materialviewpager.sample.utility.Util;
 import com.github.florent37.materialviewpager.sample.videoslistresponse.Item;
 import com.github.florent37.materialviewpager.sample.videoslistresponse.Snippet;
 import com.github.florent37.materialviewpager.sample.videoslistresponse.VideosListResponse;
@@ -96,13 +98,14 @@ private Context mContext;
                 //load image from url
                 Glide.with(mContext).load(snippet.getThumbnails().getDefault().getUrl())
                         .thumbnail(0.5f)
-                        .placeholder(R.mipmap.ic_launcher)
+                        .placeholder(R.drawable.place_holder)
                         .crossFade()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(viewHolderNormal.mImgThumbnail);
                 viewHolderNormal.mTxtTitle.setText(snippet.getTitle());
                 viewHolderNormal.mTxtDescription.setText(snippet.getDescription());
-                viewHolderNormal.mTxtPublishedAt.setText(snippet.getPublishedAt());
+                Log.e("timer",Util.getInstance().getDateTime(snippet.getPublishedAt()));
+                viewHolderNormal.mTxtPublishedAt.setText(Util.getInstance().getDateTime(snippet.getPublishedAt()));
                 break;
         }
     }

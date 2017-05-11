@@ -15,9 +15,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -27,6 +29,7 @@ import com.github.florent37.materialviewpager.sample.fragment.RecyclerViewFragme
 import com.github.florent37.materialviewpager.sample.other.Colors;
 import com.github.florent37.materialviewpager.sample.other.Data;
 import com.github.florent37.materialviewpager.sample.utility.Util;
+import com.kobakei.ratethisapp.RateThisApp;
 
 import java.util.ArrayList;
 
@@ -145,13 +148,17 @@ public class MainActivity extends DrawerActivity {
                 mDrawerLayout.closeDrawers();
 
                 switch (id) {
-                    case R.id.home:
-                        Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
-                        break;
+                    case R.id.share:
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT,
+                                getResources().getString(R.string.share_download));
+                        sendIntent.setType("text/plain");
+                        startActivity(sendIntent);   break;
                     case R.id.settings:
                         Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
                         break;
-                    case R.id.trash:
+                    case R.id.appinfo:
                         Toast.makeText(getApplicationContext(), "Trash", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.about:
@@ -169,7 +176,7 @@ public class MainActivity extends DrawerActivity {
         });
 
 
-
+rateappDialog(); //initialize rate app dialog
 
 
     }
@@ -211,5 +218,40 @@ public class MainActivity extends DrawerActivity {
         public CharSequence getPageTitle(int position) {
             return mPlayerList.get(position).playListName.toString();
         }
+    }
+
+    private void rateappDialog()
+    {
+
+        // Set callback (optional)
+        RateThisApp.setCallback(new RateThisApp.Callback() {
+            @Override
+            public void onYesClicked() {
+
+            }
+
+            @Override
+            public void onNoClicked() {
+
+            }
+
+            @Override
+            public void onCancelClicked() {
+                RateThisApp.stopRateDialog(MainActivity.this);//show never until app not reinstalled
+            }
+        });
+
+
+        // Set custom title and message
+        RateThisApp.Config config = new RateThisApp.Config(3, 5);
+        config.setTitle(R.string.rate_app_title);
+        config.setMessage(R.string.rate_app_message);
+        RateThisApp.init(config);
+
+
+        // Monitor launch times and interval from installation
+        RateThisApp.onCreate(this);
+        // Show a dialog if criteria is satisfied
+        RateThisApp.showRateDialogIfNeeded(this);
     }
 }
