@@ -1,4 +1,4 @@
-package com.github.florent37.materialviewpager.sample;
+package com.raj.moh.materialviewpager.sample;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,31 +11,25 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.github.florent37.materialviewpager.sample.fragment.RecyclerViewFragment;
-import com.github.florent37.materialviewpager.sample.other.Colors;
-import com.github.florent37.materialviewpager.sample.other.Data;
-import com.github.florent37.materialviewpager.sample.utility.Util;
+import com.github.florent37.materialviewpager.sample.R;
+import com.raj.moh.materialviewpager.sample.fragment.RecyclerViewFragment;
+import com.raj.moh.materialviewpager.sample.other.Colors;
+import com.raj.moh.materialviewpager.sample.other.Data;
+import com.raj.moh.materialviewpager.sample.utility.Util;
 import com.kobakei.ratethisapp.RateThisApp;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends DrawerActivity {
 

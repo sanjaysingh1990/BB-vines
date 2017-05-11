@@ -1,4 +1,4 @@
-package com.github.florent37.materialviewpager.sample;
+package com.raj.moh.materialviewpager.sample;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
+import com.github.florent37.materialviewpager.sample.BuildConfig;
+import com.github.florent37.materialviewpager.sample.R;
 
 import io.fabric.sdk.android.Fabric;
 

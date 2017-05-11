@@ -1,8 +1,8 @@
-package com.github.florent37.materialviewpager.sample.utility;
+package com.raj.moh.materialviewpager.sample.utility;
 
 import android.util.Log;
 
-import com.github.florent37.materialviewpager.sample.other.Colors;
+import com.raj.moh.materialviewpager.sample.other.Colors;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

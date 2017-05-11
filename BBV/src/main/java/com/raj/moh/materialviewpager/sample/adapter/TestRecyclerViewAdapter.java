@@ -1,27 +1,23 @@
-package com.github.florent37.materialviewpager.sample.adapter;
+package com.raj.moh.materialviewpager.sample.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.florent37.materialviewpager.sample.R;
-import com.github.florent37.materialviewpager.sample.activity.PlayerActivity;
-import com.github.florent37.materialviewpager.sample.other.Config;
-import com.github.florent37.materialviewpager.sample.utility.Util;
-import com.github.florent37.materialviewpager.sample.videoslistresponse.Item;
-import com.github.florent37.materialviewpager.sample.videoslistresponse.Snippet;
-import com.github.florent37.materialviewpager.sample.videoslistresponse.VideosListResponse;
+import com.raj.moh.materialviewpager.sample.activity.PlayerActivity;
+import com.raj.moh.materialviewpager.sample.other.Config;
+import com.raj.moh.materialviewpager.sample.utility.Util;
+import com.raj.moh.materialviewpager.sample.videoslistresponse.Item;
+import com.raj.moh.materialviewpager.sample.videoslistresponse.Snippet;
 
 import java.util.List;
 
@@ -104,7 +100,7 @@ private Context mContext;
                         .into(viewHolderNormal.mImgThumbnail);
                 viewHolderNormal.mTxtTitle.setText(snippet.getTitle());
                 viewHolderNormal.mTxtDescription.setText(snippet.getDescription());
-                Log.e("timer",Util.getInstance().getDateTime(snippet.getPublishedAt()));
+                Log.e("timer", Util.getInstance().getDateTime(snippet.getPublishedAt()));
                 viewHolderNormal.mTxtPublishedAt.setText(Util.getInstance().getDateTime(snippet.getPublishedAt()));
                 break;
         }
@@ -129,7 +125,7 @@ private Context mContext;
         @Override
         public void onClick(View view) {
             Snippet snippet=contents.get(getAdapterPosition()).getSnippet();
-            com.github.florent37.materialviewpager.sample.other.Item data=new com.github.florent37.materialviewpager.sample.other.Item();
+            com.raj.moh.materialviewpager.sample.other.Item data=new com.raj.moh.materialviewpager.sample.other.Item();
             data.setVideoId(snippet.getResourceId().getVideoId());
             data.setTitle(snippet.getTitle());
             data.setSubtitle(snippet.getDescription());

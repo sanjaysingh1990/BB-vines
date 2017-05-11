@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.florent37.materialviewpager.sample.activity.AboutAppActivity">
+    tools:context="com.github.florent37.materialviewpager.sample.com.raj.florent37.materialviewpager.sample.activity.AboutAppActivity">
 
 </android.support.constraint.ConstraintLayout>
