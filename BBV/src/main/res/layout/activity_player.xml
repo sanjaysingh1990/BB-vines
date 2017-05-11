@@ -7,14 +7,15 @@
 
         <variable
             name="playerActivity"
-            type="com.github.florent37.materialviewpager.sample.activity.PlayerActivity" />
+            type="com.raj.moh.sanju.vines.activity.PlayerActivity" />
 
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.test.sanjay.task.PlayerActivity">
+        tools:context="com.test.sanjay.task.PlayerActivity"
+           >
 
         <com.google.android.youtube.player.YouTubePlayerView
             android:id="@+id/youtube_view"

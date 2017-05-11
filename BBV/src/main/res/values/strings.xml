@@ -13,4 +13,6 @@ https://play.google.com/store/apps/details?id=com.cricit</string>
 
     <string name="rate_app_title">Rate this app</string>
     <string name="rate_app_message">if you enjoy using this app. would you mind taking a moment to rate it? It won\'t take more than a minute. Thank you for your support!</string>
+    <string name="interstital_ads_id">ca-app-pub-5996879671606073/7282747947</string>
+    <string name="banner_ads_id">ca-app-pub-5996879671606073/4850658745</string>
 </resources>
