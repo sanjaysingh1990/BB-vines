@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.raj.moh.sanju.vines.MainActivity;
@@ -39,6 +40,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activitySplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
         activitySplashBinding.setSplashActivity(this);
+
         init();
     }
 

@@ -3,6 +3,7 @@ package com.raj.moh.sanju.vines.utility;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.raj.moh.sanju.vines.other.Colors;
 
@@ -105,6 +106,11 @@ public class Util {
                  return "";
              }
 
+    }
+
+    public void showToast(Context con,String message)
+    {
+        Toast.makeText(con,message,Toast.LENGTH_LONG).show();
     }
 
 

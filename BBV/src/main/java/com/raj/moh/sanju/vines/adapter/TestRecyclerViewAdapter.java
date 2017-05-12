@@ -158,7 +158,7 @@ private Context mContext;
         private ViewHolderHeader(View v) {
             super(v);
             mImgHeaderThumbnail = (ImageView) v.findViewById(R.id.image_header);
-          
+
         }
 
 
