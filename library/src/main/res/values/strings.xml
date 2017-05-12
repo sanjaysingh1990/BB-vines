@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">library</string>
+    <!-- update version dialog -->
+
+    <string name="updateavailableTitle">Update Available</string>
+    <string name="updateMessage">A new version of Imenufr is available. Please update it now\s</string>
+
+    <string name="update_btn">Update</string>
+    <string name="update">UPDATE</string>
+    <string name="no_package_found">No package name found.</string>
+    <string name="no_update_found">No update found</string>
+
+</resources>
