@@ -47,7 +47,8 @@ public class RecyclerViewFragment extends Fragment {
     private TestRecyclerViewAdapter testRecyclerViewAdapter;
     private List<Item> mItemList;
     private static final int TYPE_CELL = 1;
-    static final int TYPE_HEADER = 0;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ADS = 2;
     private boolean mNoMoreLoad = true;
     private LinearLayoutManager mLayoutManager;
     private String mNextPageToken="";
@@ -155,11 +156,26 @@ public class RecyclerViewFragment extends Fragment {
                     Item headeritem = new Item();
                     headeritem.setItemtype(TYPE_HEADER);
                     headeritem.setUrl(getArguments().getString(Constants.URL));
-                     mItemList.add(headeritem);
+                    mItemList.add(headeritem);
                     for (Item item : videosListResponse.getItems()) {
                         item.setItemtype(TYPE_CELL);
                         mItemList.add(item);
+                        if(mItemList.size()%10==0&&mItemList.size()>10)
+                        {
+                            Item adsItem = new Item();
+                            adsItem.setItemtype(TYPE_ADS);
+                            mItemList.add(adsItem);
+
+                        }
                     }
+
+
+
+                    Item adsItem = new Item();
+                    adsItem.setItemtype(TYPE_ADS);
+                    mItemList.add(adsItem);
+
+
                     testRecyclerViewAdapter.notifyDataSetChanged();
                     //to check load more enable or not
                     if(mItemList.size()<videosListResponse.getPageInfo().getTotalResults())
@@ -194,14 +210,21 @@ public class RecyclerViewFragment extends Fragment {
                 if (response.body() != null && response.isSuccessful()) {
                     VideosListResponse videosListResponse = (VideosListResponse) response.body();
                     mNextPageToken=videosListResponse.getNextPageToken();
-                    Item headeritem = new Item();
-                    headeritem.setItemtype(TYPE_HEADER);
-                    headeritem.setUrl(getArguments().getString(Constants.URL));
-                    //  mItemList.add(headeritem);
-                    for (Item item : videosListResponse.getItems()) {
+                       for (Item item : videosListResponse.getItems()) {
                         item.setItemtype(TYPE_CELL);
                         mItemList.add(item);
+                           if(mItemList.size()%10==0) // add ads at every 10 multiple position
+                           {
+                               Item adsItem = new Item();
+                               adsItem.setItemtype(TYPE_ADS);
+                               mItemList.add(adsItem);
+
+                           }
                     }
+                    Item adsItem = new Item();
+                    adsItem.setItemtype(TYPE_ADS);
+                    mItemList.add(adsItem);
+
                     testRecyclerViewAdapter.notifyDataSetChanged();
                     //to check load more enable or not
                     if(mItemList.size()<videosListResponse.getPageInfo().getTotalResults())

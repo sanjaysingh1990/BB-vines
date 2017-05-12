@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.raj.moh.sanju.vines.MainActivity;
 
@@ -21,6 +22,9 @@ import com.rajmoh.allvines.databinding.ActivitySplashBinding;
 
 import java.util.ArrayList;
 
+import crickit.debut.com.library.CheckLatestVersion;
+import crickit.debut.com.library.ShowDialog;
+import crickit.debut.com.library.UpdateApplication;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +32,7 @@ import retrofit2.Response;
 public class SplashActivity extends AppCompatActivity {
     private APIInterface apiInterface;
     ActivitySplashBinding activitySplashBinding;
+    private static final String PLAY_STORE_LINK="https://play.google.com/store/apps/details?id=com.rajmoh.allvines&hl=en";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,26 @@ public class SplashActivity extends AppCompatActivity {
         //apply font
         activitySplashBinding.textAppname.setTypeface(tf);
         apiInterface = APIClient.getClient().create(APIInterface.class);
-        getplayList();
+
+        CheckLatestVersion checkLatestVersion=new CheckLatestVersion(this);
+        final ShowDialog showDialog=new ShowDialog(this);
+        checkLatestVersion.getCurrentVersion(PLAY_STORE_LINK, new UpdateApplication() {
+            @Override
+            public void newVersionFound(String latesversion) {
+
+                showDialog.showForceUpdateDialog();
+
+            }
+
+            @Override
+            public void noUpdate(String message) {
+               // Toast.makeText(SplashActivity.this,message,Toast.LENGTH_LONG).show();
+                getplayList();
+            }
+        });
+
+
+
 
     }
 

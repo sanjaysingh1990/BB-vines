@@ -1,1 +1,1 @@
-include ':materialviewpager', ':BBV', ':ratethisapp'
+include ':materialviewpager', ':BBV', ':ratethisapp', ':library'

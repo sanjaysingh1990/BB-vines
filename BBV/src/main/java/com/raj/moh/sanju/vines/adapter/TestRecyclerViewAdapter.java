@@ -34,6 +34,8 @@ private List<Item> contents;
 private Context mContext;
     static final int TYPE_HEADER = 0;
     static final int TYPE_CELL = 1;
+    static final int TYPE_ADS = 2;
+
 
     public TestRecyclerViewAdapter(List<Item> contents,Context mContext) {
         this.contents = contents;
@@ -45,6 +47,9 @@ private Context mContext;
         switch (contents.get(position).getItemtype()) {
             case 0:
                 return TYPE_HEADER;
+
+            case 2:
+                return TYPE_ADS;
             default:
                 return TYPE_CELL;
         }
@@ -72,6 +77,13 @@ private Context mContext;
                 return new ViewHolderNormal(view) {
                 };
             }
+            case TYPE_ADS: {
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.list_add_view, parent, false);
+                return new ViewHolderAds(view) {
+                };
+            }
+
         }
         return null;
     }
@@ -141,12 +153,24 @@ private Context mContext;
     }
     public class ViewHolderHeader extends RecyclerView.ViewHolder {
         private ImageView mImgHeaderThumbnail;
-        private AdView mAdView;
 
 
         private ViewHolderHeader(View v) {
             super(v);
             mImgHeaderThumbnail = (ImageView) v.findViewById(R.id.image_header);
+          
+        }
+
+
+    }
+
+
+    public class ViewHolderAds extends RecyclerView.ViewHolder {
+        private AdView mAdView;
+
+
+        private ViewHolderAds(View v) {
+            super(v);
             mAdView = (AdView)v. findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
                     .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)

@@ -15,14 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
+import com.raj.moh.sanju.vines.activity.AboutAppActivity;
+import com.raj.moh.sanju.vines.activity.FeedBackActivity;
 import com.raj.moh.sanju.vines.fragment.RecyclerViewFragment;
 import com.raj.moh.sanju.vines.other.Colors;
 import com.raj.moh.sanju.vines.other.Data;
+import com.raj.moh.sanju.vines.utility.Constants;
 import com.raj.moh.sanju.vines.utility.Util;
 import com.kobakei.ratethisapp.RateThisApp;
 import com.rajmoh.allvines.R;
@@ -150,11 +154,12 @@ public class MainActivity extends DrawerActivity {
                                 getResources().getString(R.string.share_download));
                         sendIntent.setType("text/plain");
                         startActivity(sendIntent);   break;
-                    case R.id.settings:
-                        Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
+                    case R.id.feedback:
+                        startActivity(new Intent(MainActivity.this, FeedBackActivity.class));
+
                         break;
                     case R.id.appinfo:
-                        Toast.makeText(getApplicationContext(), "Trash", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, AboutAppActivity.class));
                         break;
                     case R.id.about:
                         String url = "http://www.lootntrick.com/youtuber/bhuvan-bam-bb-ki-vines-wiki-age-weight-height-biography-net-income";
@@ -170,8 +175,27 @@ public class MainActivity extends DrawerActivity {
             }
         });
 
+        View headerLayout = navigationView.getHeaderView(0);
+        TextView mTxtUname= (TextView) headerLayout.findViewById(R.id.tv_name);
+        TextView mTxtImage= (TextView) headerLayout.findViewById(R.id.text_image);
+        String uname=Util.getInstance().getValueFromSharedPreference(Constants.USERNAME,"",this);
+        mTxtUname.setText(uname);
+        if(uname.length()>0)
+        {
+            String[] data=uname.split(" ");
+            if(data.length==1)
+            {
+                mTxtImage.setText((data[0].substring(0,1)).toUpperCase());
 
-rateappDialog(); //initialize rate app dialog
+            }
+            if (data.length>1)
+            {
+                mTxtImage.setText((data[0].substring(0,1)+data[1].substring(0,1)).toUpperCase());
+
+            }
+        }
+
+        rateappDialog(); //initialize rate app dialog
 
 
     }
