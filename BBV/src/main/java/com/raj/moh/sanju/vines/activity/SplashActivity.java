@@ -15,6 +15,7 @@ import com.raj.moh.sanju.vines.pojo.channellistresponse.Item;
 import com.raj.moh.sanju.vines.service.APIClient;
 import com.raj.moh.sanju.vines.service.APIInterface;
 import com.raj.moh.sanju.vines.utility.Constants;
+import com.raj.moh.sanju.vines.utility.Util;
 import com.rajmoh.allvines.R;
 import com.rajmoh.allvines.databinding.ActivitySplashBinding;
 
@@ -69,9 +70,18 @@ public class SplashActivity extends AppCompatActivity {
                     }
                     Data data=new Data("More",Constants.MORE,Constants.MOREVIDEOSID);
                     playlist.add(data);
-                    Intent mainactivity=new Intent(SplashActivity.this,UserNameActivity.class);
-                    mainactivity.putParcelableArrayListExtra("data",playlist);
-                    startActivity(mainactivity);
+                    if(Util.getInstance().getValueFromSharedPreference(Constants.USERNAME,"",SplashActivity.this).length()==0) {
+                        Intent userNameActivity = new Intent(SplashActivity.this, UserNameActivity.class);
+                        userNameActivity.putParcelableArrayListExtra("data", playlist);
+                        startActivity(userNameActivity);
+                    }
+                    else
+                    {
+                        Intent mainactivity = new Intent(SplashActivity.this, MainActivity.class);
+                        mainactivity.putParcelableArrayListExtra("data", playlist);
+                        startActivity(mainactivity);
+
+                    }
                     finish();
 
                 }

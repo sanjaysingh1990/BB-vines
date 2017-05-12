@@ -13,6 +13,7 @@ public class Constants {
  public static final String URL="url";
  public static final String MORE="http://sacredsexyu.com/ssu-wp/wp-content/uploads/i-want-more-111795-530-530.jpg";
  public static final String MOREVIDEOSID="UUqwUrj10mAEsqezcItqvwEw";
+ public static final String USERNAME="username";
 
 
 }

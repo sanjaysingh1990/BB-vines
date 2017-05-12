@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.raj.moh.sanju.vines.MainActivity;
+import com.raj.moh.sanju.vines.utility.Constants;
+import com.raj.moh.sanju.vines.utility.Util;
 import com.rajmoh.allvines.R;
 import com.rajmoh.allvines.databinding.ActivityUserNameBinding;
 
@@ -35,7 +37,8 @@ public class UserNameActivity extends AppCompatActivity {
                 activityUserNameBinding.edittextUname.setError("empty");
                 return;
             }
-
+            //save name to shared preference
+            Util.getInstance().saveValueToSharedPreference(Constants.USERNAME,activityUserNameBinding.edittextUname.getText().toString(),UserNameActivity.this);
             Intent mainactivity=new Intent(UserNameActivity.this,MainActivity.class);
             mainactivity.putParcelableArrayListExtra("data",getIntent().getParcelableArrayListExtra("data"));
             startActivity(mainactivity);
