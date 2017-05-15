@@ -85,7 +85,7 @@ public class SplashActivity extends AppCompatActivity {
         /**
          GET List Resources
          **/
-        Call call = apiInterface.doGetPlayList(Constants.PART, Constants.CHANNEL_ID, Constants.KEY);
+        Call call = apiInterface.doGetPlayList(Constants.PART, Constants.CHANNEL_ID_MYSTERIOUS_WORLD, Constants.KEY);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -97,7 +97,7 @@ public class SplashActivity extends AppCompatActivity {
                         Data data = new Data(item.getSnippet().getTitle(), item.getSnippet().getThumbnails().getMedium().getUrl(), item.getId());
                         playlist.add(data);
                     }
-                    Data data = new Data("More", Constants.MORE, Constants.MOREVIDEOSID);
+                    Data data = new Data("More", Constants.MORE, Constants.MOREVIDEOSID_MYSTERIOUS_WORLD);
                     playlist.add(data);
                     if (Util.getInstance().getValueFromSharedPreference(Constants.USERNAME, "", SplashActivity.this).length() == 0) {
                         Intent userNameActivity = new Intent(SplashActivity.this, UserNameActivity.class);

@@ -110,6 +110,7 @@ private Context mContext;
                 Snippet snippet=contents.get(position).getSnippet();
 
                 //load image from url
+                if(snippet.getThumbnails()!=null)
                 Glide.with(mContext).load(snippet.getThumbnails().getDefault().getUrl())
                         .thumbnail(0.5f)
                         .placeholder(R.drawable.place_holder)
