@@ -1,4 +1,4 @@
-package com.raj.moh.sanju.vines.VideoInfoResponse;
+package com.raj.moh.sanju.vines.singlevideoinforesponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -2,11 +2,13 @@ package com.raj.moh.sanju.vines.other;
 
 import java.io.Serializable;
 
+import io.realm.RealmObject;
+
 /**
  * Created by NEERAJ on 5/6/2017.
  */
 
-public class Item implements Serializable {
+public class Item extends RealmObject implements Serializable {
     public String getTitle() {
         return title;
     }
@@ -44,5 +46,15 @@ public class Item implements Serializable {
     }
 
     private String videoId;
+
+    public String getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(String createAt) {
+        this.createAt = createAt;
+    }
+
+    private String createAt;
 
 }

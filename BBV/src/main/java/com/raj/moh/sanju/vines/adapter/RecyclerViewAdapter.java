@@ -1,6 +1,7 @@
 package com.raj.moh.sanju.vines.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * Created by florentchampigny on 24/04/15.
  */
-public class TestRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 private List<Item> contents;
 private Context mContext;
@@ -37,7 +38,7 @@ private Context mContext;
     static final int TYPE_ADS = 2;
 
 
-    public TestRecyclerViewAdapter(List<Item> contents,Context mContext) {
+    public RecyclerViewAdapter(List<Item> contents, Context mContext) {
         this.contents = contents;
         this.mContext=mContext;
     }
@@ -117,7 +118,7 @@ private Context mContext;
                         .into(viewHolderNormal.mImgThumbnail);
                 viewHolderNormal.mTxtTitle.setText(snippet.getTitle());
                 viewHolderNormal.mTxtDescription.setText(snippet.getDescription());
-                Log.e("timer", Util.getInstance().getDateTime(snippet.getPublishedAt()));
+              //  Log.e("timer", Util.getInstance().getDateTime(snippet.getPublishedAt()));
                 viewHolderNormal.mTxtPublishedAt.setText(Util.getInstance().getDateTime(snippet.getPublishedAt()));
                 break;
         }
@@ -142,24 +143,19 @@ private Context mContext;
         @Override
         public void onClick(View view) {
             Snippet snippet=contents.get(getAdapterPosition()).getSnippet();
-            com.raj.moh.sanju.vines.other.Item data=new com.raj.moh.sanju.vines.other.Item();
-            data.setVideoId(snippet.getResourceId().getVideoId());
-            data.setTitle(snippet.getTitle());
-            data.setSubtitle(snippet.getDescription());
             Intent intent=new Intent(mContext,PlayerActivity.class);
-            intent.putExtra(Config.ITEM,data);
+            intent.putExtra(Config.VIDEO_ID,snippet.getResourceId().getVideoId());
             mContext.startActivity(intent);
         }
     }
-    public class ViewHolderHeader extends RecyclerView.ViewHolder {
+    public class ViewHolderHeader extends RecyclerView.ViewHolder  {
         private ImageView mImgHeaderThumbnail;
-
 
         private ViewHolderHeader(View v) {
             super(v);
             mImgHeaderThumbnail = (ImageView) v.findViewById(R.id.image_header);
+           }
 
-        }
 
 
     }
@@ -173,11 +169,11 @@ private Context mContext;
             super(v);
             mAdView = (AdView)v. findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .addTestDevice("C04B1BFFB0774708339BC273F8A43708")
+                   // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                  //  .addTestDevice("C04B1BFFB0774708339BC273F8A43708")
                     .build();
             mAdView.loadAd(adRequest);
-            mAdView.setAdListener(new AdListener() {
+            /*mAdView.setAdListener(new AdListener() {
                 @Override
                 public void onAdFailedToLoad(int i) {
                     Log.e("adderror",i+"");
@@ -192,7 +188,7 @@ private Context mContext;
                 public void onAdLoaded() {
                     Log.e("add","loaded");
                 }
-            });
+            });*/
         }
 
 

@@ -1,10 +1,10 @@
-package com.raj.moh.sanju.vines.VideoInfoResponse;
+package com.raj.moh.sanju.vines.singlevideoinforesponse;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Videoinforesponse {
+public class SingleVideoInfoResponse {
 
 @SerializedName("items")
 @Expose

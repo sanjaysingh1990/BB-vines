@@ -23,6 +23,7 @@ android {
                 storePassword properties['keystore.password']
                 keyAlias properties['keystore.alias']
                 keyPassword properties['keystore.password']
+
             }
         }
     }
@@ -31,7 +32,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-
+            lintOptions {
+                disable 'MissingTranslation'
+            }
             if (signFile.exists())
                 signingConfig signingConfigs.release
         }
@@ -67,6 +70,7 @@ dependencies {
 
     compile project(path: ':ratethisapp')
 
+    compile project(path: ':library')
     compile 'com.android.support:design:25.3.1'
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
@@ -76,9 +80,10 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-ads:9.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'com.google.firebase:firebase-crash:9.4.0'
     compile 'com.google.firebase:firebase-database:9.4.0'
-    compile project(path: ':library')
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'io.realm:realm-android:0.84.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
 }
 apply plugin: 'com.google.gms.google-services'

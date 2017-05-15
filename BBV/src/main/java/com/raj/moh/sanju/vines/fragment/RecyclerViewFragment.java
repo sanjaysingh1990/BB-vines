@@ -2,6 +2,7 @@ package com.raj.moh.sanju.vines.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,12 @@ import android.widget.ProgressBar;
 
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 
-import com.raj.moh.sanju.vines.adapter.TestRecyclerViewAdapter;
+import com.raj.moh.sanju.vines.adapter.RecyclerViewAdapter;
+import com.raj.moh.sanju.vines.callbacks.SnackBarEvent;
 import com.raj.moh.sanju.vines.service.APIClient;
 import com.raj.moh.sanju.vines.service.APIInterface;
 import com.raj.moh.sanju.vines.utility.Constants;
+import com.raj.moh.sanju.vines.utility.Util;
 import com.raj.moh.sanju.vines.videoslistresponse.Item;
 import com.raj.moh.sanju.vines.videoslistresponse.VideosListResponse;
 import com.rajmoh.allvines.R;
@@ -44,7 +47,9 @@ public class RecyclerViewFragment extends Fragment {
     RecyclerView mRecyclerView;
     @BindView((R.id.progressbar))
     ProgressBar mProgressBar;
-    private TestRecyclerViewAdapter testRecyclerViewAdapter;
+    @BindView(R.id.constraintlayout)
+    ConstraintLayout constraintLayout;
+    private RecyclerViewAdapter recyclerViewAdapter;
     private List<Item> mItemList;
     private static final int TYPE_CELL = 1;
     private static final int TYPE_HEADER = 0;
@@ -86,21 +91,31 @@ public class RecyclerViewFragment extends Fragment {
 
         //Use this now
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
-        testRecyclerViewAdapter = new TestRecyclerViewAdapter(mItemList, getActivity());
-        mRecyclerView.setAdapter(testRecyclerViewAdapter);
+        recyclerViewAdapter = new RecyclerViewAdapter(mItemList, getActivity());
+        mRecyclerView.setAdapter(recyclerViewAdapter);
 
       setListener();
 
     }
 
     public void loadData()
-    {   String playlistid = getArguments().getString(Constants.PLAYLISTID);
-        Log.e("id", playlistid + "");
+    {   final String playlistid = getArguments().getString(Constants.PLAYLISTID);
+      //  Log.e("id", playlistid + "");
 //        Log.e("size",mItemList.size()+"");
         if(mItemList.size()==0) {
-           mProgressBar.setVisibility(View.VISIBLE);
-            getplayList(playlistid);
-
+             if(Util.getInstance().isOnline(getActivity())) {
+                 mProgressBar.setVisibility(View.VISIBLE);
+                 getplayList(playlistid);
+            }
+            else
+            {
+                Util.getInstance().showSnackBar(constraintLayout, getResources().getString(R.string.no_internet_connecton), "RETRY",true, new SnackBarEvent() {
+                    @Override
+                    public void retry() {
+                       loadData();
+                    }
+                });
+            }
         }
     }
 
@@ -128,7 +143,7 @@ public class RecyclerViewFragment extends Fragment {
                             mNoMoreLoad = true;
                             mProgressBar.setVisibility(View.VISIBLE);
                             getplayListMore(playlistid);
-                           Log.e("status","reached bottom");
+                         //  Log.e("status","reached bottom");
                         }
                     }
 
@@ -141,7 +156,7 @@ public class RecyclerViewFragment extends Fragment {
         mRecyclerView.addOnScrollListener(onScrollListener);
     }
 
-    private void getplayList(String playlistid) {
+    private void getplayList(final String playlistid) {
         /**
          GET List Resources
          **/
@@ -156,6 +171,7 @@ public class RecyclerViewFragment extends Fragment {
                     Item headeritem = new Item();
                     headeritem.setItemtype(TYPE_HEADER);
                     headeritem.setUrl(getArguments().getString(Constants.URL));
+                    headeritem.setId(playlistid);
                     mItemList.add(headeritem);
                     for (Item item : videosListResponse.getItems()) {
                         item.setItemtype(TYPE_CELL);
@@ -176,7 +192,7 @@ public class RecyclerViewFragment extends Fragment {
                     mItemList.add(adsItem);
 
 
-                    testRecyclerViewAdapter.notifyDataSetChanged();
+                    recyclerViewAdapter.notifyDataSetChanged();
                     //to check load more enable or not
                     if(mItemList.size()<videosListResponse.getPageInfo().getTotalResults())
                     {
@@ -186,14 +202,14 @@ public class RecyclerViewFragment extends Fragment {
                     {
                         mNoMoreLoad=true;
                     }
-                    Log.e("vsize", videosListResponse.getItems().size() + "");
+                  //  Log.e("vsize", videosListResponse.getItems().size() + "");
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
-                Log.e("error", t.getLocalizedMessage());
+              //  Log.e("error", t.getLocalizedMessage());
             }
         });
     }
@@ -225,7 +241,7 @@ public class RecyclerViewFragment extends Fragment {
                     adsItem.setItemtype(TYPE_ADS);
                     mItemList.add(adsItem);
 
-                    testRecyclerViewAdapter.notifyDataSetChanged();
+                    recyclerViewAdapter.notifyDataSetChanged();
                     //to check load more enable or not
                     if(mItemList.size()<videosListResponse.getPageInfo().getTotalResults())
                     {
@@ -235,14 +251,14 @@ public class RecyclerViewFragment extends Fragment {
                     {
                         mNoMoreLoad=true;
                     }
-                    Log.e("vsize", videosListResponse.getItems().size() + "");
+                 //   Log.e("vsize", videosListResponse.getItems().size() + "");
                 }
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
-                Log.e("error", t.getLocalizedMessage());
+               // Log.e("error", t.getLocalizedMessage());
             }
         });
     }

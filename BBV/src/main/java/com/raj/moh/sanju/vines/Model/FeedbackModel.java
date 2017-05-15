@@ -9,6 +9,16 @@ public class FeedbackModel
     private String deviceId;
     private String email;
     private String message;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    private String time;
     public String getDeviceId() {
         return deviceId;
     }

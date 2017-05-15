@@ -237,6 +237,7 @@ public class RateThisApp {
                     context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 } catch (android.content.ActivityNotFoundException anfe) {
                     context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
+                 Log.e("link","http://play.google.com/store/apps/details?id=" + context.getPackageName());
                 }
                 setOptOut(context, true);
             }

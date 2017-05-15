@@ -5,10 +5,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.IntentCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -21,8 +25,19 @@ import android.widget.Toast;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.raj.moh.sanju.vines.Model.UpdateFCMToken;
 import com.raj.moh.sanju.vines.activity.AboutAppActivity;
+
+import com.raj.moh.sanju.vines.activity.FavoriteActivity;
 import com.raj.moh.sanju.vines.activity.FeedBackActivity;
+import com.raj.moh.sanju.vines.activity.SplashActivity;
 import com.raj.moh.sanju.vines.fragment.RecyclerViewFragment;
 import com.raj.moh.sanju.vines.other.Colors;
 import com.raj.moh.sanju.vines.other.Data;
@@ -44,6 +59,8 @@ public class MainActivity extends DrawerActivity {
     private ArrayList<RecyclerViewFragment> mlistFragments;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    private DatabaseReference mDatabase;
+  private boolean mDoubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +76,7 @@ public class MainActivity extends DrawerActivity {
         }
          mPlayerList=getIntent().getParcelableArrayListExtra("data");
         mlistFragments=new ArrayList<>();
-         Log.e("id",mPlayerList.get(0).playListId+"");
+       //  Log.e("id",mPlayerList.get(0).playListId+"");
         for(int i=0;i<mPlayerList.size();i++)
         {
             mlistFragments.add(RecyclerViewFragment.newInstance(mPlayerList.get(i).playListId,mPlayerList.get(i).playListUrl));
@@ -96,7 +113,7 @@ public class MainActivity extends DrawerActivity {
               // get an array of all the cards
                 Colors[]cards= Colors.values();
                 int num=Util.getInstance().getRadomNumber();
-                Log.e("value",cards[num].getColorCode()+"");
+            //    Log.e("value",cards[num].getColorCode()+"");
                 return HeaderDesign.fromColorAndUrl(
                         Color.parseColor(cards[num].getColorCode()),
                         mPlayerList.get(page).playListUrl);
@@ -126,7 +143,7 @@ public class MainActivity extends DrawerActivity {
 
             @Override
             public void onPageSelected(int position) {
-                Log.e("pos",position+"");
+            //    Log.e("pos",position+"");
                 mlistFragments.get(position).loadData();
 
             }
@@ -168,7 +185,16 @@ public class MainActivity extends DrawerActivity {
                         startActivity(i);
                         break;
                     case R.id.logout:
+                        Util.getInstance().clearValues(MainActivity.this);
+                        Intent intent=new Intent(MainActivity.this, SplashActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(new Intent(MainActivity.this, SplashActivity.class));
                         finish();
+                        break;
+                    case R.id.favorite:
+                        startActivity(new Intent(MainActivity.this, FavoriteActivity.class));
+
+                        break;
 
                 }
                 return true;
@@ -196,8 +222,12 @@ public class MainActivity extends DrawerActivity {
         }
 
         rateappDialog(); //initialize rate app dialog
-
-
+         init();
+        updateFcmDeviceToken();
+    }
+    private void init()
+    {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -272,5 +302,61 @@ public class MainActivity extends DrawerActivity {
         RateThisApp.onCreate(this);
         // Show a dialog if criteria is satisfied
         RateThisApp.showRateDialogIfNeeded(this);
+
+
     }
+
+    private void updateFcmDeviceToken() {
+        final String devicetoken = FirebaseInstanceId.getInstance().getToken();
+       if(devicetoken!=null&&Util.getInstance().getValueFromSharedPreference(Constants.FCM_DEVICE_TOKEN,"",this).compareTo(devicetoken)!=0) {
+           Log.e("device token", devicetoken + "");
+
+           //get device id
+            String android_id = Util.getInstance().getDeviceId(MainActivity.this);
+            UpdateFCMToken updateFCMToken = new UpdateFCMToken();
+            updateFCMToken.setFcmToken(devicetoken);
+            updateFCMToken.setUpdateAt(Util.getInstance().getCurrentTime());
+
+            mDatabase.child("DeviceToken").child(android_id).setValue(updateFCMToken).addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                }
+            }).addOnFailureListener(MainActivity.this, new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                 //   Log.e("error", e.getMessage() + "");
+                }
+            }).addOnSuccessListener(MainActivity.this, new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    //save current device token
+                    Util.getInstance().saveValueToSharedPreference(Constants.FCM_DEVICE_TOKEN,devicetoken,MainActivity.this);
+                }
+            });
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+            if (mDoubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.mDoubleBackToExitPressedOnce = true;
+        //snackbar just to show message no events
+            Util.getInstance().showSnackBar(mDrawerLayout,getResources().getString(R.string.double_back_press),"",false,null);
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    mDoubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+
+    }
+
+
 }
