@@ -230,8 +230,10 @@ public class RecyclerViewFragment extends Fragment {
                     VideosListResponse videosListResponse = (VideosListResponse) response.body();
                     mNextPageToken=videosListResponse.getNextPageToken();
                        for (Item item : videosListResponse.getItems()) {
-                        item.setItemtype(TYPE_CELL);
-                        mItemList.add(item);
+                           if(item.getSnippet().getTitle().compareToIgnoreCase("Private video")!=0) {
+                               item.setItemtype(TYPE_CELL);
+                               mItemList.add(item);
+                           }
                            if(mItemList.size()%10==0) // add ads at every 10 multiple position
                            {
                                Item adsItem = new Item();
