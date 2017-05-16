@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "602706742506",
+    "firebase_url": "https://all-vines.firebaseio.com",
+    "project_id": "all-vines",
+    "storage_bucket": "all-vines.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602706742506:android:03c92bef6fb1e736",
+        "android_client_info": {
+          "package_name": "com.rajmoh.allvines"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602706742506-9r6932cfri0u1enqb5rnndoapu6i6ons.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rajmoh.allvines",
+            "certificate_hash": "f32679b360dbf43eb337be36605da0b6d1796023"
+          }
+        },
+        {
+          "client_id": "602706742506-9h29mppq8oo3sddpqqtpr3jfvhsja076.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDXFYbymOJMrC6ic-42KAaEAJwy0Ikdx0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602706742506-9h29mppq8oo3sddpqqtpr3jfvhsja076.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
