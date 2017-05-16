@@ -132,6 +132,39 @@ public class Util {
 
     }
 
+    /*
+    ************************* save values to shared preference ***********************
+     */
+    public void saveValueToSharedPreference(String key, boolean value,
+                                            Context context) {
+        if (context != null) {
+            SharedPreferences prefs;
+            prefs = context.getSharedPreferences(Constants.FILE_NAME, 0);
+            SharedPreferences.Editor saveValue = prefs.edit();
+            saveValue.putBoolean(key, value);
+            saveValue.commit();
+        }
+    }
+
+    /**
+     * @param key          The key from you want to get the value.
+     * @param defaultValue Default value, if nothing is found on that key.
+     * @param context
+     * @description To get the value from a preference file on the specified key.
+     */
+    public boolean getValueFromSharedPreference(String key, boolean defaultValue, Context context) {
+        //possible may fragment removed and api trying to get value
+        if (context != null) {
+            SharedPreferences prefs;
+            prefs = context.getSharedPreferences(Constants.FILE_NAME, 0);
+            return prefs.getBoolean(key,defaultValue);
+        } else {
+            return false;
+        }
+
+    }
+
+
     public void clearValues(Context context) {
         SharedPreferences prefs;
         prefs = context.getSharedPreferences(Constants.FILE_NAME, 0);
@@ -228,6 +261,12 @@ public DatabaseReference getDatabaseReference()
     }
 
     return mDatabase;
+    }
+
+
+    public void setNullRealam()
+    {
+        AllVinesRealm=null;
     }
 
 }

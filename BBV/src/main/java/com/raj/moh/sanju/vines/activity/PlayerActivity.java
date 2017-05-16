@@ -190,7 +190,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
         mInterstitialAd = new InterstitialAd(this);
         // set the ad unit ID
         mInterstitialAd.setAdUnitId(getString(R.string.interstital_ads_id));
-
+        Log.e("inads",getString(R.string.interstital_ads_id));
         AdRequest adRequest = new AdRequest.Builder()
                // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 // Check the LogCat to get your test device ID
@@ -212,7 +212,7 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-
+             Log.e("status",errorCode+"");
             }
 
             @Override

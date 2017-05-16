@@ -53,6 +53,19 @@ android {
     productFlavors {
         mysteriousworld {
             applicationId "com.rajmoh.mysteriousworld"
+            minSdkVersion project.minSdk
+            targetSdkVersion project.sdk
+            versionCode 1
+            versionName "1.0"
+
+        }
+
+        allvines {
+            applicationId "com.rajmoh.allvines"
+            minSdkVersion project.minSdk
+            targetSdkVersion project.sdk
+            versionCode 1
+            versionName "1.0"
 
         }
 

@@ -22,6 +22,7 @@ public class Constants {
  public static final String USERNAME="username";
  public static final String FILE_NAME="allvines";
  public static final String FCM_DEVICE_TOKEN="fcmdevicetoken";
+ public static final String FAVORITES_LOADED_ONCE="favoriteloaded";
 
 
 

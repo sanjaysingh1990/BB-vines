@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.raj.moh.sanju.vines.DashBoard;
+import com.raj.moh.sanju.vines.MainActivity;
 import com.raj.moh.sanju.vines.callbacks.SnackBarEvent;
 import com.raj.moh.sanju.vines.other.Data;
 import com.raj.moh.sanju.vines.pojo.channellistresponse.ChannelListResponse;
@@ -35,7 +35,7 @@ public class MySterousWorldSplashActivity extends AppCompatActivity {
     MysteriousWorldSplashActivityBinding mysteriousWorldSplashActivityBinding;
     private APIInterface apiInterface;
     private  ArrayList<Data> playlist;
-     private static final String PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=com.rajmoh.allvines&hl=en";
+     private static final String PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=com.rajmoh.mysteriousworld&hl=en";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,7 +228,7 @@ public class MySterousWorldSplashActivity extends AppCompatActivity {
             userNameActivity.putParcelableArrayListExtra("data", playlist);
             startActivity(userNameActivity);
         } else {
-            Intent mainactivity = new Intent(MySterousWorldSplashActivity.this,DashBoard.class);
+            Intent mainactivity = new Intent(MySterousWorldSplashActivity.this,MainActivity.class);
             mainactivity.putParcelableArrayListExtra("data", playlist);
             startActivity(mainactivity);
 

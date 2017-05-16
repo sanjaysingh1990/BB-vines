@@ -5,6 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.WindowManager;
 
 import com.raj.moh.sanju.vines.MainActivity;
 import com.raj.moh.sanju.vines.callbacks.SnackBarEvent;
@@ -31,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
     private APIInterface apiInterface;
     ActivitySplashBinding activitySplashBinding;
     private static final String PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=com.rajmoh.allvines&hl=en";
-
+    private ArrayList<Data> playlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
+        hideStatusBar();
 
         // Font path
         String fontPath = "fonts/sailregular.otf";
@@ -77,11 +80,12 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    private void getplayList() {
-        /**
-         GET List Resources
-         **/
-        Call call = apiInterface.doGetPlayList(Constants.PART, Constants.CHANNEL_ID_MYSTERIOUS_WORLD, Constants.KEY);
+  /*  private void getplayList() {
+
+
+
+
+        Call call = apiInterface.doGetPlayList(Constants.PART, Constants.CHANNEL_ID, Constants.KEY);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -93,7 +97,7 @@ public class SplashActivity extends AppCompatActivity {
                         Data data = new Data(item.getSnippet().getTitle(), item.getSnippet().getThumbnails().getMedium().getUrl(), item.getId());
                         playlist.add(data);
                     }
-                    Data data = new Data("More", Constants.MORE, Constants.MOREVIDEOSID_MYSTERIOUS_WORLD);
+                    Data data = new Data("More", Constants.MORE, Constants.MOREVIDEOSID);
                     playlist.add(data);
                     if (Util.getInstance().getValueFromSharedPreference(Constants.USERNAME, "", SplashActivity.this).length() == 0) {
                         Intent userNameActivity = new Intent(SplashActivity.this, UserNameActivity.class);
@@ -122,4 +126,120 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
     }
+*/
+
+    private void getplayList() {
+        /**
+         GET List Resources
+         **/
+        Call call = apiInterface.doGetPlayList(Constants.PART, Constants.CHANNEL_ID, Constants.KEY);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.body() != null && response.isSuccessful()) {
+                    ChannelListResponse channelListResponse = (ChannelListResponse) response.body();
+                    //  Log.e("data", channelListResponse.getItems().size() + "");
+                    playlist = new ArrayList<>();
+                    for (Item item : channelListResponse.getItems()) {
+                        Data data = new Data(item.getSnippet().getTitle(), item.getSnippet().getThumbnails().getMedium().getUrl(), item.getId());
+                        playlist.add(data);
+                    }
+                    Log.e("total",channelListResponse.getPageInfo().getTotalResults()+"");
+                    Log.e("size1",channelListResponse.getItems().size()+"");
+
+                    if(playlist.size()<channelListResponse.getPageInfo().getTotalResults()) {
+                        getMoreplayList(channelListResponse.getNextPageToken());
+                    }
+                    else
+                    {
+                        Data data = new Data("More", Constants.MORE, Constants.MOREVIDEOSID);
+                        playlist.add(data);
+                        moveTo();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                //  Log.e("error", t.getLocalizedMessage());
+                Util.getInstance().showSnackBar(activitySplashBinding.constraintlayout, t.getLocalizedMessage(), getResources().getString(R.string.retry), true, new SnackBarEvent() {
+                    @Override
+                    public void retry() {
+                        getplayList();
+                    }
+                });
+            }
+        });
+    }
+
+    public void hideStatusBar() {
+        // Hide status bar
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    public void showStatusBar() {
+        // Show status bar
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    private void getMoreplayList(String nextpageToken) {
+        Log.e("token",nextpageToken);
+        /**
+         GET List Resources
+         **/
+        Call call = apiInterface.doGetPlayListMore(Constants.PART, Constants.CHANNEL_ID, Constants.KEY,nextpageToken);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.body() != null && response.isSuccessful()) {
+                    ChannelListResponse channelListResponse = (ChannelListResponse) response.body();
+                    //  Log.e("data", channelListResponse.getItems().size() + "");
+                    for (Item item : channelListResponse.getItems()) {
+                        Data data = new Data(item.getSnippet().getTitle(), item.getSnippet().getThumbnails().getMedium().getUrl(), item.getId());
+                        playlist.add(data);
+                    }
+                    Log.e("size2",channelListResponse.getItems().size()+"");
+
+                    if(playlist.size()<channelListResponse.getPageInfo().getTotalResults()) {
+                        getMoreplayList(channelListResponse.getNextPageToken());
+                    }
+                    else
+                    {
+                        Data data = new Data("More", Constants.MORE, Constants.MOREVIDEOSID);
+                        playlist.add(data);
+                        moveTo();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                //  Log.e("error", t.getLocalizedMessage());
+                Util.getInstance().showSnackBar(activitySplashBinding.constraintlayout, t.getLocalizedMessage(), getResources().getString(R.string.retry), true, new SnackBarEvent() {
+                    @Override
+                    public void retry() {
+                        getplayList();
+                    }
+                });
+            }
+        });
+    }
+
+    private void moveTo()
+    {
+        if (Util.getInstance().getValueFromSharedPreference(Constants.USERNAME, "", SplashActivity.this).length() == 0) {
+            Intent userNameActivity = new Intent(SplashActivity.this, UserNameActivity.class);
+            userNameActivity.putParcelableArrayListExtra("data", playlist);
+            startActivity(userNameActivity);
+        } else {
+            Intent mainactivity = new Intent(SplashActivity.this,MainActivity.class);
+            mainactivity.putParcelableArrayListExtra("data", playlist);
+            startActivity(mainactivity);
+
+        }
+        finish();
+    }
+
+
 }

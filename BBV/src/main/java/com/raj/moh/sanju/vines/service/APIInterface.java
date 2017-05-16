@@ -22,6 +22,6 @@ public interface APIInterface {
     Call<VideosListResponse> doGetVideosMore(@Query("playlistId") String playlistid, @Query("key") String key, @Query("part") String part, @Query("maxResults") Integer limit,@Query("pageToken") String pageToken);
 
     @GET("/youtube/v3/playlists")
-    Call<ChannelListResponse> doGetPlayListMore(@Query("part") String part, @Query("channelId") String channelId, @Query("key") String key,@Query("page_token") String page_token);
+    Call<ChannelListResponse> doGetPlayListMore(@Query("part") String part, @Query("channelId") String channelId, @Query("key") String key,@Query("pageToken") String page_token);
 
 }

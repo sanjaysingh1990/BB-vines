@@ -39,7 +39,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="50sp"
 
             android:windowSoftInputMode="stateHidden"
