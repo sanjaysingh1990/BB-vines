@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.raj.moh.sanju.vines.DashBoard;
 import com.raj.moh.sanju.vines.MainActivity;
 import com.raj.moh.sanju.vines.utility.Constants;
 import com.raj.moh.sanju.vines.utility.Util;
@@ -39,7 +40,14 @@ public class UserNameActivity extends AppCompatActivity {
             }
             //save name to shared preference
             Util.getInstance().saveValueToSharedPreference(Constants.USERNAME,activityUserNameBinding.edittextUname.getText().toString(),UserNameActivity.this);
-            Intent mainactivity=new Intent(UserNameActivity.this,MainActivity.class);
+            Intent mainactivity=null;
+            if(getApplicationContext().getPackageName().compareToIgnoreCase("com.rajmoh.mysteriousworld")==0)
+            {
+                mainactivity=new Intent(UserNameActivity.this,DashBoard.class);
+
+            }
+            else
+             mainactivity=new Intent(UserNameActivity.this,MainActivity.class);
             mainactivity.putParcelableArrayListExtra("data",getIntent().getParcelableArrayListExtra("data"));
             startActivity(mainactivity);
             finish();

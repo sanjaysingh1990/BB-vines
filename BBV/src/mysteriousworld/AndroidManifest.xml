@@ -78,7 +78,7 @@
             android:screenOrientation="portrait"
             ></activity>
 
-        <activity android:name="com.raj.moh.sanju.vines.DashBoard"
+        <activity android:name="com.raj.moh.sanju.vines.MainActivity"
             android:screenOrientation="portrait"
             />
     </application>

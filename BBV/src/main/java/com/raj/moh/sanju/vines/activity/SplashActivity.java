@@ -5,12 +5,8 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.raj.moh.sanju.vines.MainActivity;
-
 import com.raj.moh.sanju.vines.callbacks.SnackBarEvent;
 import com.raj.moh.sanju.vines.other.Data;
 import com.raj.moh.sanju.vines.pojo.channellistresponse.ChannelListResponse;

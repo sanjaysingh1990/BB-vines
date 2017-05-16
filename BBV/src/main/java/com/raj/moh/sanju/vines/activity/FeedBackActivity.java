@@ -72,7 +72,12 @@ public class FeedBackActivity extends AppCompatActivity {
              feedbackModel.setEmail(activityFeedBackBinding.edittextEmail.getText().toString());
              feedbackModel.setMessage(activityFeedBackBinding.editTextMessage.getText().toString());
            //  Log.e("Android","Android ID : "+android_id);
-             mDatabase.child("feedback").child(String.valueOf(System.currentTimeMillis())).setValue(feedbackModel).addOnCompleteListener(FeedBackActivity.this, new OnCompleteListener<Void>() {
+             String feedbackbranch="feedback";
+             if(getApplicationContext().getPackageName().compareToIgnoreCase("com.rajmoh.mysteriousworld")==0)
+             {
+                  feedbackbranch="feedbackmysetriousworld";
+             }
+             mDatabase.child(feedbackbranch).child(String.valueOf(System.currentTimeMillis())).setValue(feedbackModel).addOnCompleteListener(FeedBackActivity.this, new OnCompleteListener<Void>() {
                  @Override
                  public void onComplete(@NonNull Task<Void> task) {
                      activityFeedBackBinding.progressBar2.setVisibility(View.GONE);
@@ -142,26 +147,26 @@ private void initializeBannerAds()
 {
     //for banner add
     AdRequest adRequest = new AdRequest.Builder()
-            //.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-           // .addTestDevice("C04B1BFFB0774708339BC273F8A43708")
+            .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+            .addTestDevice("C04B1BFFB0774708339BC273F8A43708")
             .build();
     activityFeedBackBinding.adView.loadAd(adRequest);
-   /* activityFeedBackBinding.adView.setAdListener(new AdListener() {
+    activityFeedBackBinding.adView.setAdListener(new AdListener() {
         @Override
         public void onAdFailedToLoad(int i) {
-           // Log.e("adderror",i+"");
+            Log.e("adderror",i+"");
         }
 
         @Override
         public void onAdOpened() {
-          //  Log.e("add","opened");
+            Log.e("add","opened");
         }
 
         @Override
         public void onAdLoaded() {
-           // Log.e("add","loaded");
+            Log.e("add","loaded");
         }
-    });*/
+    });
 }
 
 }

@@ -312,8 +312,12 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
     {
         //get device id
         String android_id = Util.getInstance().getDeviceId(PlayerActivity.this);
-
-        Util.getInstance().getDatabaseReference().child("UserFavorites").child(android_id+"Favorites").child(item.getVideoId()).removeValue().addOnCompleteListener(PlayerActivity.this, new OnCompleteListener<Void>() {
+        String favoritebranch="UserFavorites";
+        if(getApplicationContext().getPackageName().compareToIgnoreCase("com.rajmoh.mysteriousworld")==0)
+        {
+            favoritebranch="UserFavoritesMysetriousWorld";
+        }
+        Util.getInstance().getDatabaseReference().child(favoritebranch).child(android_id+"Favorites").child(item.getVideoId()).removeValue().addOnCompleteListener(PlayerActivity.this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
             }
@@ -339,8 +343,12 @@ public class PlayerActivity extends YouTubeBaseActivity implements YouTubePlayer
     {
         //get device id
         String android_id = Util.getInstance().getDeviceId(PlayerActivity.this);
-
-        Util.getInstance().getDatabaseReference().child("UserFavorites").child(android_id+"Favorites").child(item.getVideoId()).setValue(item).addOnCompleteListener(PlayerActivity.this, new OnCompleteListener<Void>() {
+        String favoritebranch="UserFavorites";
+        if(getApplicationContext().getPackageName().compareToIgnoreCase("com.rajmoh.mysteriousworld")==0)
+        {
+            favoritebranch="UserFavoritesMysetriousWorld";
+        }
+        Util.getInstance().getDatabaseReference().child(favoritebranch).child(android_id+"Favorites").child(item.getVideoId()).setValue(item).addOnCompleteListener(PlayerActivity.this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
             }

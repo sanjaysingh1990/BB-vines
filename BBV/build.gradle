@@ -3,7 +3,7 @@ apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion project.sdk
-    buildToolsVersion project.buildTools
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.rajmoh.allvines"
@@ -12,6 +12,8 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+
 
     File signFile = project.file('keyInfos.properties')
     if (signFile.exists()) {
@@ -40,17 +42,21 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+
     dataBinding {
         enabled = true
     }
 
-    buildToolsVersion '25.0.0'
+
+
+
+    productFlavors {
+        mysteriousworld {
+            applicationId "com.rajmoh.mysteriousworld"
+
+        }
+
+    }
 }
 
 dependencies {

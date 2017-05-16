@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">All-Vines</string>
+    <string name="app_name">MW</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,15 +8,15 @@
     <string name="likecount">likeCount</string>
     <string name="dislikecount">dislikeCount</string>
     <string name="comment_count">commentCount</string>
-    <string name="share_download">Hey I just downloaded and installed All Vines, awesome app to watch my favorite BB videos.Click here to download All Vines:
-https://play.google.com/store/apps/details?id=com.rajmoh.allvines</string>
+    <string name="share_download">Hey I just downloaded and installed MySterious World, awesome app to know about unknown facts in world.Click here to download MySterious World:
+https://play.google.com/store/apps/details?id=com.rajmoh.mysteriousworld</string>
 
     <string name="rate_app_title">Rate this app</string>
     <string name="rate_app_message">if you enjoy using this app. would you mind taking a moment to rate it? It won\'t take more than a minute. Thank you for your support!</string>
-    <string name="interstital_ads_id">ca-app-pub-5996879671606073/7282747947</string>
-    <string name="banner_ads_id">ca-app-pub-5996879671606073/4850658745</string>
+    <string name="interstital_ads_id">ca-app-pub-5996879671606073/1025574748</string>
+    <string name="banner_ads_id">ca-app-pub-5996879671606073/2502307946</string>
     <string name="about_app">About Application</string>
-    <string name="about_text">This Application is dedicated to B.B has you tube channel B.B Vines. Just to promote his videos because I love his videos the way he performs with different characters. Please rate the app and share the app with your friends. </string>
+    <string name="about_text">This Application contains videos from you tube channel Mysterious World I love to watch and knowing about many unknow facts in world we have. Please rate the app and share the app with your friends. </string>
     <string name="feedback_heading">Feedback</string>
     <string name="email_hint">your email</string>
     <string name="message_hint">your message</string>

@@ -170,11 +170,11 @@ private Context mContext;
             super(v);
             mAdView = (AdView)v. findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder()
-                   // .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                  //  .addTestDevice("C04B1BFFB0774708339BC273F8A43708")
+                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                    .addTestDevice("C04B1BFFB0774708339BC273F8A43708")
                     .build();
             mAdView.loadAd(adRequest);
-            /*mAdView.setAdListener(new AdListener() {
+            mAdView.setAdListener(new AdListener() {
                 @Override
                 public void onAdFailedToLoad(int i) {
                     Log.e("adderror",i+"");
@@ -189,7 +189,7 @@ private Context mContext;
                 public void onAdLoaded() {
                     Log.e("add","loaded");
                 }
-            });*/
+            });
         }
 
 

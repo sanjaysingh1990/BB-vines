@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="orange">#FF4081</color>
+
+    <color name="accent_color">@color/orange</color>
+    <color name="colorPrimary">@color/orange</color>
+    <color name="colorPrimaryDark">@color/orange</color>
+    <color name="statusBarColor">@color/orange</color>
+    <color name="navigationBarColor">@android:color/black</color>
+    <color name="drawerArrowColor">@android:color/white</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="gray_bg">#dadada</color>
+    <color name="splah_bg">#CFD8DC</color>
+    <color name="dark_gray">#848484</color>
+    <color name="white">#ffffff</color>
+</resources>

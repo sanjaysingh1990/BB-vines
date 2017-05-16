@@ -174,8 +174,7 @@ public class RecyclerViewFragment extends Fragment {
                     headeritem.setId(playlistid);
                    // mItemList.add(headeritem);
                     for (Item item : videosListResponse.getItems()) {
-                        Log.e("title",item.getSnippet().getTitle()+"");
-                       if(item.getSnippet().getTitle().compareToIgnoreCase("Private video")!=0) {
+                          if(item.getSnippet().getTitle().compareToIgnoreCase("Private video")!=0) {
                            item.setItemtype(TYPE_CELL);
                            mItemList.add(item);
                        }

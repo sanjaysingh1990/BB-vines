@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends DrawerActivity {
+public class DashBoard extends DrawerActivity {
 
     @BindView(R.id.materialViewPager)
     MaterialViewPager mViewPager;
@@ -60,7 +60,7 @@ public class MainActivity extends DrawerActivity {
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
     private DatabaseReference mDatabase;
-  private boolean mDoubleBackToExitPressedOnce = false;
+    private boolean mDoubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +74,9 @@ public class MainActivity extends DrawerActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-         mPlayerList=getIntent().getParcelableArrayListExtra("data");
+        mPlayerList=getIntent().getParcelableArrayListExtra("data");
         mlistFragments=new ArrayList<>();
-       //  Log.e("id",mPlayerList.get(0).playListId+"");
+        //  Log.e("id",mPlayerList.get(0).playListId+"");
         for(int i=0;i<mPlayerList.size();i++)
         {
             mlistFragments.add(RecyclerViewFragment.newInstance(mPlayerList.get(i).playListId,mPlayerList.get(i).playListUrl));
@@ -110,10 +110,10 @@ public class MainActivity extends DrawerActivity {
 
                 return null;*/
 
-              // get an array of all the cards
+                // get an array of all the cards
                 Colors[]cards= Colors.values();
                 int num=Util.getInstance().getRadomNumber();
-            //    Log.e("value",cards[num].getColorCode()+"");
+                //    Log.e("value",cards[num].getColorCode()+"");
                 return HeaderDesign.fromColorAndUrl(
                         Color.parseColor(cards[num].getColorCode()),
                         mPlayerList.get(page).playListUrl);
@@ -139,11 +139,11 @@ public class MainActivity extends DrawerActivity {
         mViewPager.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-              }
+            }
 
             @Override
             public void onPageSelected(int position) {
-            //    Log.e("pos",position+"");
+                //    Log.e("pos",position+"");
                 mlistFragments.get(position).loadData();
 
             }
@@ -172,27 +172,27 @@ public class MainActivity extends DrawerActivity {
                         sendIntent.setType("text/plain");
                         startActivity(sendIntent);   break;
                     case R.id.feedback:
-                        startActivity(new Intent(MainActivity.this, FeedBackActivity.class));
+                        startActivity(new Intent(DashBoard.this, FeedBackActivity.class));
 
                         break;
                     case R.id.appinfo:
-                        startActivity(new Intent(MainActivity.this, AboutAppActivity.class));
+                        startActivity(new Intent(DashBoard.this, AboutAppActivity.class));
                         break;
-                    case R.id.about:
+                   /* case R.id.about:
                         String url = "http://www.lootntrick.com/youtuber/bhuvan-bam-bb-ki-vines-wiki-age-weight-height-biography-net-income";
                         Intent i = new Intent(Intent.ACTION_VIEW);
                         i.setData(Uri.parse(url));
                         startActivity(i);
-                        break;
+                        break;*/
                     case R.id.logout:
-                        Util.getInstance().clearValues(MainActivity.this);
-                        Intent intent=new Intent(MainActivity.this, SplashActivity.class);
+                        Util.getInstance().clearValues(DashBoard.this);
+                        Intent intent=new Intent(DashBoard.this, SplashActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(new Intent(MainActivity.this, SplashActivity.class));
+                        startActivity(new Intent(DashBoard.this, SplashActivity.class));
                         finish();
                         break;
                     case R.id.favorite:
-                        startActivity(new Intent(MainActivity.this, FavoriteActivity.class));
+                        startActivity(new Intent(DashBoard.this, FavoriteActivity.class));
 
                         break;
 
@@ -222,7 +222,7 @@ public class MainActivity extends DrawerActivity {
         }
 
         rateappDialog(); //initialize rate app dialog
-         init();
+        init();
         updateFcmDeviceToken();
     }
     private void init()
@@ -245,8 +245,7 @@ public class MainActivity extends DrawerActivity {
             }
         }, 200);
 
-        Util.getInstance().showToast(this,getApplicationContext().getPackageName());
-    }
+      }
 
     class myPagerAdapter extends FragmentStatePagerAdapter
     {
@@ -288,7 +287,7 @@ public class MainActivity extends DrawerActivity {
 
             @Override
             public void onCancelClicked() {
-                RateThisApp.stopRateDialog(MainActivity.this);//show never until app not reinstalled
+                RateThisApp.stopRateDialog(DashBoard.this);//show never until app not reinstalled
             }
         });
 
@@ -310,29 +309,35 @@ public class MainActivity extends DrawerActivity {
 
     private void updateFcmDeviceToken() {
         final String devicetoken = FirebaseInstanceId.getInstance().getToken();
-       if(devicetoken!=null&&Util.getInstance().getValueFromSharedPreference(Constants.FCM_DEVICE_TOKEN,"",this).compareTo(devicetoken)!=0) {
-           Log.e("device token", devicetoken + "");
+        if(devicetoken==null)
+            Log.e("status","null");
+        if(devicetoken!=null&&Util.getInstance().getValueFromSharedPreference(Constants.FCM_DEVICE_TOKEN,"",this).compareTo(devicetoken)!=0) {
+            Log.e("device token", devicetoken + "");
 
-           //get device id
-            String android_id = Util.getInstance().getDeviceId(MainActivity.this);
+            //get device id
+            String android_id = Util.getInstance().getDeviceId(DashBoard.this);
             UpdateFCMToken updateFCMToken = new UpdateFCMToken();
             updateFCMToken.setFcmToken(devicetoken);
             updateFCMToken.setUpdateAt(Util.getInstance().getCurrentTime());
-
-            mDatabase.child("DeviceToken").child(android_id).setValue(updateFCMToken).addOnCompleteListener(MainActivity.this, new OnCompleteListener<Void>() {
+            String deviceTokenbranch="DeviceToken";
+            if(getApplicationContext().getPackageName().compareToIgnoreCase("com.rajmoh.mysteriousworld")==0)
+            {
+                deviceTokenbranch="DeviceTokenMysetriousWorld";
+            }
+            mDatabase.child(deviceTokenbranch).child(android_id).setValue(updateFCMToken).addOnCompleteListener(DashBoard.this, new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                 }
-            }).addOnFailureListener(MainActivity.this, new OnFailureListener() {
+            }).addOnFailureListener(DashBoard.this, new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                 //   Log.e("error", e.getMessage() + "");
+                       Log.e("error", e.getMessage() + "");
                 }
-            }).addOnSuccessListener(MainActivity.this, new OnSuccessListener<Void>() {
+            }).addOnSuccessListener(DashBoard.this, new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     //save current device token
-                    Util.getInstance().saveValueToSharedPreference(Constants.FCM_DEVICE_TOKEN,devicetoken,MainActivity.this);
+                    Util.getInstance().saveValueToSharedPreference(Constants.FCM_DEVICE_TOKEN,devicetoken,DashBoard.this);
                 }
             });
         }
@@ -342,21 +347,21 @@ public class MainActivity extends DrawerActivity {
     @Override
     public void onBackPressed() {
 
-            if (mDoubleBackToExitPressedOnce) {
-                super.onBackPressed();
-                return;
-            }
+        if (mDoubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
 
-            this.mDoubleBackToExitPressedOnce = true;
+        this.mDoubleBackToExitPressedOnce = true;
         //snackbar just to show message no events
-            Util.getInstance().showSnackBar(mDrawerLayout,getResources().getString(R.string.double_back_press),"",false,null);
-            new Handler().postDelayed(new Runnable() {
+        Util.getInstance().showSnackBar(mDrawerLayout,getResources().getString(R.string.double_back_press),"",false,null);
+        new Handler().postDelayed(new Runnable() {
 
-                @Override
-                public void run() {
-                    mDoubleBackToExitPressedOnce = false;
-                }
-            }, 2000);
+            @Override
+            public void run() {
+                mDoubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
 
     }
 
